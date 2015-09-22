@@ -37,7 +37,9 @@ def evaluatePerformance():
     n,d = X.shape
 
     # create list to hold data
-    accuracies = []
+    treeAccuracies = []
+    stumpAccuracies = []
+    dt3Accuracies = []
 
     # perform 100 trials
     for x in range(0, numOfTrials):
@@ -70,20 +72,32 @@ def evaluatePerformance():
             clf = tree.DecisionTreeClassifier()
             clf = clf.fit(Xtrain,ytrain)
 
+            # train the 1-level decision tree
+            oneLevel = tree.DecisionTreeClassifier(max_depth=1)
+            oneLevel = oneLevel.fit(Xtrain,ytrain)
+
+            # train the 3-level decision tree
+            threeLevel = tree.DecisionTreeClassifier(max_depth=3)
+            threeLevel = threeLevel.fit(Xtrain,ytrain)
+
             # output predictions on the remaining data
-            y_pred = clf.predict(Xtest)
+            y_pred_tree = clf.predict(Xtest)
+            y_pred_stump = oneLevel.predict(Xtest)
+            y_pred_dt3 = threeLevel.predict(Xtest)
 
             # compute the training accuracy of the model and save to the 
             # list of all accuracies
-            accuracies.append(accuracy_score(ytest, y_pred))
+            treeAccuracies.append(accuracy_score(ytest, y_pred_tree))
+            stumpAccuracies.append(accuracy_score(ytest, y_pred_stump))
+            dt3Accuracies.append(accuracy_score(ytest, y_pred_dt3))
     
-    # TODO: update these statistics based on the results of your experiment
-    meanDecisionTreeAccuracy = np.mean(accuracies)
-    stddevDecisionTreeAccuracy = 0
-    meanDecisionStumpAccuracy = 0
-    stddevDecisionStumpAccuracy = 0
-    meanDT3Accuracy = 0
-    stddevDT3Accuracy = 0
+    # Update these statistics based on the results of your experiment
+    meanDecisionTreeAccuracy = np.mean(treeAccuracies)
+    stddevDecisionTreeAccuracy = np.std(treeAccuracies)
+    meanDecisionStumpAccuracy = np.mean(stumpAccuracies)
+    stddevDecisionStumpAccuracy = np.std(stumpAccuracies)
+    meanDT3Accuracy = np.mean(dt3Accuracies)
+    stddevDT3Accuracy = np.std(dt3Accuracies)
 
     # make certain that the return value matches the API specification
     stats = np.zeros((3,2))
