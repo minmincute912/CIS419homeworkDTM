@@ -9,7 +9,8 @@ import matplotlib.pyplot as plt
 from sklearn import tree
 from sklearn.metrics import accuracy_score
 
-
+numOfTrials = 100
+numOfFoldsPerTrial = 10
 
 def evaluatePerformance():
     '''
@@ -36,12 +37,10 @@ def evaluatePerformance():
     n,d = X.shape
 
     # create list to hold data
-    
+    accuracies = []
 
     # perform 100 trials
-    for x in range(0, 100):
-        print "trial number %d" %(x),
-
+    for x in range(0, numOfTrials):
         # shuffle the data
         idx = np.arange(n)
         np.random.seed(13)
@@ -50,29 +49,36 @@ def evaluatePerformance():
         y = y[idx]
 
         # split the data randomly into 10 folds
+        folds = []    
+        intervalDivider = len(X)/numOfFoldsPerTrial
+        for fold in range(0, numOfFoldsPerTrial):
+            # designate a new testing range
+            Xtest = X[fold * intervalDivider:(fold + 1) * intervalDivider,:]
+            ytest = y[fold * intervalDivider:(fold + 1) * intervalDivider,:]
+            Xtrain = X[:(fold * intervalDivider),:]
+            ytrain = y[:(fold * intervalDivider),:]
+            Xtrain = Xtrain.tolist()
+            ytrain = ytrain.tolist()
 
+            # complete the training data set so that it contains all
+            # data except for the current test fold
+            for dataRow in range((fold + 1) * intervalDivider, len(X)):
+                Xtrain.append(X[dataRow])
+                ytrain.append(y[dataRow])
 
-        # iterate through the 10 folds. Choose a new one as "test" each time
+            # train the decision tree
+            clf = tree.DecisionTreeClassifier()
+            clf = clf.fit(Xtrain,ytrain)
 
+            # output predictions on the remaining data
+            y_pred = clf.predict(Xtest)
 
-    # split the data
-    Xtrain = X[1:101,:]  # train on first 100 instances
-    Xtest = X[101:,:]
-    ytrain = y[1:101,:]  # test on remaining instances
-    ytest = y[101:,:]
-
-    # train the decision tree
-    clf = tree.DecisionTreeClassifier()
-    clf = clf.fit(Xtrain,ytrain)
-
-    # output predictions on the remaining data
-    y_pred = clf.predict(Xtest)
-
-    # compute the training accuracy of the model
-    meanDecisionTreeAccuracy = accuracy_score(ytest, y_pred)
-    
+            # compute the training accuracy of the model and save to the 
+            # list of all accuracies
+            accuracies.append(accuracy_score(ytest, y_pred))
     
     # TODO: update these statistics based on the results of your experiment
+    meanDecisionTreeAccuracy = np.mean(accuracies)
     stddevDecisionTreeAccuracy = 0
     meanDecisionStumpAccuracy = 0
     stddevDecisionStumpAccuracy = 0
