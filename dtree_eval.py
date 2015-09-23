@@ -89,7 +89,7 @@ def evaluatePerformance():
             # list of all accuracies
             treeAccuracies.append(accuracy_score(ytest, y_pred_tree))
             stumpAccuracies.append(accuracy_score(ytest, y_pred_stump))
-            dt3Accuracies.append(accuracy_score(ytest, y_pred_dt3))
+            dt3Accuracies.append(accuracy_score(ytest, y_pred_dt3)) 
     
     # Update these statistics based on the results of your experiment
     meanDecisionTreeAccuracy = np.mean(treeAccuracies)
