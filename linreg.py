@@ -35,6 +35,7 @@ class LinearRegression:
             self.JHist.append( (self.computeCost(X, y, theta), theta) )
             print "Iteration: ", i+1, " Cost: ", self.JHist[i][0], " Theta: ", theta
             # TODO:  add update equation here
+            # theta = theta - self.alpha * ()
 
         return theta
     
@@ -51,7 +52,9 @@ class LinearRegression:
               ** make certain you don't return a matrix with just one value! **
         '''
         # TODO: add objective (cost) equation here
-    
+        n,d = X.shape
+        cost = (X*theta - y).getT()*(X*theta - y)/(2*n)
+        return cost[0,0]
 
     def fit(self, X, y):
         '''
