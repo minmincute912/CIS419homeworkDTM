@@ -9,10 +9,9 @@ import matplotlib.pyplot as plt
 from sklearn import tree
 from sklearn.metrics import accuracy_score
 
-numOfTrials = 100
 numOfFoldsPerTrial = 10
 
-def evaluatePerformance():
+def evaluatePerformance(numTrials=100):
     '''
     Evaluate the performance of decision trees,
     averaged over 1,000 trials of 10-fold cross validation
@@ -42,7 +41,7 @@ def evaluatePerformance():
     dt3Accuracies = []
 
     # perform 100 trials
-    for x in range(0, numOfTrials):
+    for x in range(0, numTrials):
         # shuffle the data
         idx = np.arange(n)
         np.random.seed(13)
