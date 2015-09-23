@@ -168,7 +168,7 @@ if __name__ == "__main__":
     visualizeObjective(lr_model,theta1_vals, theta2_vals, X, y)
 
     # Compute the closed form solution in one line of code
-    theta_closed_form = 0  # TODO:  replace "0" with closed form solution
+    theta_closed_form = (X.getT()*X).getI()*X.getT()*y  
     print "theta_closed_form: ", theta_closed_form
     
 

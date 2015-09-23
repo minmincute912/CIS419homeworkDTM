@@ -10,6 +10,6 @@ y = np.matrix((allData[:,-1])).T
 # g e t t h e number o f i n s t a n c e s ( n ) and number o f f e a t u r e s ( d )
 n,d = X.shape
 X = np.c_[np.ones((n,1)), X]
-lr_model = LinearRegression(alpha = 0.01, n_iter = 100)
+lr_model = LinearRegression(alpha = 0.01, n_iter = 5)
 lr_model.fit(X,y)
 plotRegLine1D(lr_model, X, y)

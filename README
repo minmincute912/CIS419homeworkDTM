@@ -103,7 +103,7 @@ SHOWDOWN_DT3_TEST_ACCURACY_STDDEV: 123.45
 # Copy and paste your one-line matrix equation for computing the closed form solution
 # to linear regression (e.g., Line 171 of test_linreg_univariate.py or Line 51 of 
 # test_linreg_multivariate.py)
-LINREGIMPLEMENTATION_CLOSEDFORM: thetaClosedForm = 0
+LINREGIMPLEMENTATION_CLOSEDFORM: thetaClosedForm = (X.getT()*X).getI()*X.getT()*y  
  
  
  

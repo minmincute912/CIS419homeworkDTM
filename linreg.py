@@ -30,23 +30,21 @@ class LinearRegression:
             the final theta found by gradient descent
         '''
         n,d = X.shape
-        self.JHist = []
+        self.JHist = []    
         for i in xrange(self.n_iter):
             self.JHist.append( (self.computeCost(X, y, theta), theta) )
             print "Iteration: ", i+1, " Cost: ", self.JHist[i][0], " Theta: ", theta
             # TODO:  add update equation here
             n,d = X.shape
             thetaDimensions,b = theta.shape     
-            correction0 = 0
-            correction1 = 1       
-            
+            corrections = [0] * thetaDimensions
+
             for j in range(0,n):
-                correction0 += (theta.getT()*X[j,:].getT() - y[j])*X[j,0]
-                correction1 += (theta.getT()*X[j,:].getT() - y[j])*X[j,1]
-            theta[0] = theta[0] - correction0*(self.alpha/n)
-            theta[1] = theta[1] - correction1*(self.alpha/n)
+                for thetaDimension in range(0,thetaDimensions):
+                    corrections[thetaDimension] += (theta.getT()*X[j,:].getT() - y[j])*X[j,thetaDimension]
+            for thetaDimension in range(0,thetaDimensions):
+                theta[thetaDimension] = theta[thetaDimension] - corrections[thetaDimension]*(self.alpha/n)               
         return theta
-    
 
     def computeCost(self, X, y, theta):
         '''
