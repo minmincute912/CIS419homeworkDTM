@@ -114,7 +114,7 @@ def evaluatePerformance(numTrials=100):
 if __name__ == "__main__":
     
     stats = evaluatePerformance()
-    print "Decision Tree Accuracy = ", stats[0,0], " (", stats[0,1], ")"
-    print "Decision Stump Accuracy = ", stats[1,0], " (", stats[1,1], ")"
-    print "3-level Decision Tree = ", stats[2,0], " (", stats[2,1], ")"
+    print ("Decision Tree Accuracy = ", stats[0,0], " (", stats[0,1], ")")
+    print ("Decision Stump Accuracy = ", stats[1,0], " (", stats[1,1], ")")
+    print ("3-level Decision Tree = ", stats[2,0], " (", stats[2,1], ")")
 # ...to HERE.

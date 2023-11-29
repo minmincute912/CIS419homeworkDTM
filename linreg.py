@@ -31,9 +31,9 @@ class LinearRegression:
         '''
         n,d = X.shape
         self.JHist = []    
-        for i in xrange(self.n_iter):
+        for i in range(self.n_iter):
             self.JHist.append( (self.computeCost(X, y, theta), theta) )
-            print "Iteration: ", i+1, " Cost: ", self.JHist[i][0], " Theta: ", theta
+            print ("Iteration: ", i+1, " Cost: ", self.JHist[i][0], " Theta: ", theta)
             # TODO:  add update equation here
             n,d = X.shape
             thetaDimensions,b = theta.shape     
@@ -71,7 +71,7 @@ class LinearRegression:
         '''
         n = len(y)
         n,d = X.shape
-        if self.theta==None:
+        if self.theta is None:
             self.theta = np.matrix(np.zeros((d,1)))
         self.theta = self.gradientDescent(X,y,self.theta)    
 
